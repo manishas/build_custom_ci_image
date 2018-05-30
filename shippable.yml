@@ -1,17 +1,19 @@
 resources:
   - name: build_custom_ci_repo
     type: gitRepo
-    integration: drship_github  #replace with your Github integration, if needed
+    integration: github-manishas  #replace with your Github integration, if needed
     pointer:
-      sourceName: "devops-recipes/build_custom_ci_image"  #org name/repository name
+      sourceName: "manishas/build_custom_ci_image"  #org name/repository name
       branch: master
+    buildOnCommit: false
+    buildOnPullRequest: true
 
   - name: build_custom_ci_img_dh
     type: image
-    integration: drship_dockerhub # replace with your integration name
+    integration: manishas-dh  # replace with your Docker registry integration name
     versionTemplate:
-      sourceName: "devopsrecipes/build_custom_ci" # replace with your Hub URL
-      versionName: latest
+      sourceName: "devopsrecipes/build_custom_ci" # replace with your Docker registry repo URL
+      versionName: latest # this is just a seed tag and will be updated each time a new tag is pushed
 
 jobs:
   - name: build_custom_img
@@ -41,4 +43,3 @@ jobs:
     flags:
       # Use flags to filter SPOG views
       - custom_ci_img
-      - war
